@@ -23,7 +23,7 @@ make build
 
 Quote patterns to have the CLI expand them. Patterns use Go's `filepath.Glob` syntax (`*`, `?`, character classes); matching is case sensitive and `**` does not recursively search directories. File extensions are accepted in any case. Overlapping patterns process each path once.
 
-Each successful conversion prints its input and output paths. Errors go to stderr, remaining files are still processed, and any error gives a nonzero exit status. JPEG output does not copy EXIF metadata.
+Each successful conversion prints its input and output paths. Errors go to stderr, remaining files are still processed, and any error gives a nonzero exit status. HEIC rotation and mirroring properties are applied to the pixels so JPEGs display in the intended orientation. JPEG output does not copy EXIF metadata.
 
 To make the command available on your PATH, run `go install .` and add your Go binary directory (usually `~/go/bin`) to PATH.
 

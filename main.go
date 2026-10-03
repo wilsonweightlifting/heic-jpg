@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/jdeng/goheif"
+	"github.com/jdeng/goheif/heif"
 )
 
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
@@ -105,6 +106,11 @@ func convert(input, output string, quality int, overwrite bool) error {
 	if err != nil {
 		return fmt.Errorf("decode HEIC: %w", err)
 	}
+	item, err := heif.Open(in).PrimaryItem()
+	if err != nil {
+		return fmt.Errorf("read HEIC orientation: %w", err)
+	}
+	img = applyOrientation(img, item.Properties)
 	// Encode to a temporary file so failed conversions never leave partial JPEGs.
 	tmp, err := os.CreateTemp(filepath.Dir(output), ".heic-jpg-*.jpg")
 	if err != nil {
